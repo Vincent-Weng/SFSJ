@@ -1,7 +1,7 @@
 package com.cosgame.sfsj.common;
 
 import static com.cosgame.sfsj.util.CardUtils.cardOfRank;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;

@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Utility class to hold card serialization/deserialization functions.
+ *
+ */
 public class SerdeUtils {
 
   private SerdeUtils() {

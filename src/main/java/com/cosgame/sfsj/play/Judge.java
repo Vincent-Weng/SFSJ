@@ -1,18 +1,18 @@
-package com.cosgame.sfsj.logic;
+package com.cosgame.sfsj.play;
 
 import com.cosgame.sfsj.common.Card.CardRank;
 import com.cosgame.sfsj.common.Card.CardSuit;
 import com.cosgame.sfsj.common.Hand;
 import java.util.List;
 
-public class RulesLib {
+public class Judge {
 
   class RoundRes {
-    int beater;
+    int winner;
     int points;
 
-    public RoundRes(int beater, int points) {
-      this.beater = beater;
+    public RoundRes(int winner, int points) {
+      this.winner = winner;
       this.points = points;
     }
   }
@@ -24,7 +24,7 @@ public class RulesLib {
    * in this round, which therefore determines the format of this round.
    * @return The index of player (in the input list) who won this round and the points gained.
    */
-  public RoundRes compareRound(List<Hand> hands, CardRank dominantRank, CardSuit dominantSuit) {
+  public RoundRes compareRound(List<Hand> hands, CardRank dominantRank, CardSuit dominantSuit, boolean tractorsEnabled) {
     return new RoundRes(0, 0);
   }
 }

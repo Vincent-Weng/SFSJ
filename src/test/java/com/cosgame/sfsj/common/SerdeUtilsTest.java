@@ -9,7 +9,7 @@ public class SerdeUtilsTest {
 
   @Test
   public void TestPrettyPrint() {
-    Deck deck = new Deck();
+    GameDeck deck = new GameDeck(1);
     String printRes = SerdeUtils.prettyPrintCards(deck.getDeck(), 13);
     // 5 card rows, times 5 text lines for each card row
     assertEquals(5 * 5, printRes.split("\n").length);

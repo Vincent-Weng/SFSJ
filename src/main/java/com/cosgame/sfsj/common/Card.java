@@ -1,8 +1,9 @@
 package com.cosgame.sfsj.common;
 
 import java.util.Objects;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class Card {
+public class Card implements Comparable<Card> {
 
   private final CardRank number;
   private final CardSuit suit;
@@ -39,6 +40,25 @@ public class Card {
     return suit;
   }
 
+  /**
+   * Card sorting without considering additional factors:
+   *
+   * RED_JOKER (0), BLACK_JOKER (1), SPADE:ACE (2), SPADE:KING (3), ..., SPADE:TWO, HEART:ACE,
+   * HEART:KING, ..., HEART:TWO, CLUB:ACE, CLUB:KING, ..., CLUB:TWO, DIAMOND:ACE, DIAMOND:KING, ...,
+   * DIAMOND:TWO (53),
+   */
+  private int cardSortBase() {
+    if (getSuit() == CardSuit.RED_JOKER) {
+      return 0;
+    } else if (getSuit() == CardSuit.BLACK_JOKER) {
+      return 1;
+    } else if (getRank() == CardRank.ACE) {
+      return getSuit().ordinal() * 13 + 2;
+    } else {
+      return getSuit().ordinal() * 13 + (13 - getRank().ordinal()) + 3;
+    }
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -59,6 +79,11 @@ public class Card {
   @Override
   public String toString() {
     return number.toString() + suit.toString();
+  }
+
+  @Override
+  public int compareTo(@NonNull Card that) {
+    return this.cardSortBase() - that.cardSortBase();
   }
 
   public enum CardSuit {
@@ -97,15 +122,15 @@ public class Card {
     QUEEN(" Q"),
     KING(" K");
 
-  private final String symbol;
+    private final String symbol;
 
-  CardRank(String symbol) {
-    this.symbol = symbol;
-  }
+    CardRank(String symbol) {
+      this.symbol = symbol;
+    }
 
-  @Override
-  public String toString() {
-    return symbol;
+    @Override
+    public String toString() {
+      return symbol;
+    }
   }
-}
 }
