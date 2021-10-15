@@ -5,10 +5,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class Card implements Comparable<Card> {
 
-  private final CardRank number;
-  private final CardSuit suit;
   private static final Card RED_JOKER = new Card(CardRank.JOKER, CardSuit.RED_JOKER);
   private static final Card BLACK_JOKER = new Card(CardRank.JOKER, CardSuit.BLACK_JOKER);
+  private final CardRank number;
+  private final CardSuit suit;
+
+  private Card(CardRank number, CardSuit suite) {
+    this.number = number;
+    this.suit = suite;
+  }
 
   /**
    * Get an immutable card instance.
@@ -25,11 +30,6 @@ public class Card implements Comparable<Card> {
       return BLACK_JOKER;
     }
     return new Card(rank, suit);
-  }
-
-  private Card(CardRank number, CardSuit suite) {
-    this.number = number;
-    this.suit = suite;
   }
 
   public CardRank getRank() {
@@ -91,8 +91,8 @@ public class Card implements Comparable<Card> {
     HEART("♥"),
     CLUB("♣"),
     DIAMOND("♦"),
-    RED_JOKER("#"),
-    BLACK_JOKER("+");
+    RED_JOKER("JO"),
+    BLACK_JOKER("jo");
 
     private final String symbol;
 
@@ -107,7 +107,7 @@ public class Card implements Comparable<Card> {
   }
 
   public enum CardRank {
-    JOKER("  "),
+    JOKER(" "),
     ACE(" A"),
     TWO(" 2"),
     THREE(" 3"),

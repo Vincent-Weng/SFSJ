@@ -6,9 +6,9 @@ import com.cosgame.sfsj.common.GameDeck;
 
 public class Game {
 
+  private final GameDeck gameDeck = new GameDeck(4);
   private CardRank dominantRank; // pre-set for this game
   private CardSuit dominantSuit; // determined during dealing
-  private final GameDeck gameDeck = new GameDeck(4);
 
 
 }
