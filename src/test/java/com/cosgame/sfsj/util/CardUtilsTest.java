@@ -13,7 +13,7 @@ public class CardUtilsTest {
 
   @Test
   public void testCardComparator() {
-    List<Card> cards1 = TestUtils.cards("JOjo9c9s9h9dAc5cJsQhKd");
+    List<Card> cards1 = TestUtils.handOf("JOjo9c9s9h9dAc5cJsQhKd").getCards();
     List<Card> cards2 = new ArrayList<>(cards1);
     cards2.sort(CardUtils.cardComparator(CardRank.NINE, CardSuit.CLUB));
     assertEquals(cards1, cards2);

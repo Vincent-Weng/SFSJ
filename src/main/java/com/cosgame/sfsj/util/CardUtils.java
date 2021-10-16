@@ -6,6 +6,7 @@ import com.cosgame.sfsj.common.Card.CardSuit;
 import java.util.Comparator;
 
 public class CardUtils {
+
   /**
    * Compare two cards considering the dominants in the game.
    *
@@ -44,5 +45,11 @@ public class CardUtils {
         }
       }
     };
+  }
+
+  public static boolean isDominant(Card card, CardRank dominantRank, CardSuit dominantSuit) {
+    return card.getRank() == CardRank.JOKER
+        || card.getRank() == dominantRank
+        || card.getSuit() == dominantSuit;
   }
 }

@@ -3,6 +3,8 @@ package com.cosgame.sfsj.util;
 import com.cosgame.sfsj.common.Card;
 import com.cosgame.sfsj.common.Card.CardRank;
 import com.cosgame.sfsj.common.Card.CardSuit;
+import com.cosgame.sfsj.play.Hand;
+import com.cosgame.sfsj.play.Hand.Slice;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
@@ -22,62 +24,71 @@ public class TestUtils {
   }
 
   /**
-   * Generate list of cards from a string. Each card is represented with two characters:
+   * Generate a card from a string, represented by two characters:
    *
    * Red Joker = JO, Black Joker = jo, 2 Spade = 2s, 10 Heart = Th, J Club = Jc, A Diamond = Ad
    */
-  public static List<Card> cards(String cards) {
+  public static Card cardOf(String card) {
+    if (card.equals("JO")) {
+      return Card.of(CardRank.JOKER, CardSuit.RED_JOKER);
+    } else if (card.equals("jo")) {
+      return Card.of(CardRank.JOKER, CardSuit.BLACK_JOKER);
+    } else {
+      char rankCh = card.charAt(0);
+      char suitCh = card.charAt(1);
+      CardRank rank;
+      CardSuit suit;
+      switch (rankCh) {
+        case 'A':
+          rank = CardRank.ACE;
+          break;
+        case 'K':
+          rank = CardRank.KING;
+          break;
+        case 'Q':
+          rank = CardRank.QUEEN;
+          break;
+        case 'J':
+          rank = CardRank.JACK;
+          break;
+        case 'T':
+          rank = CardRank.TEN;
+          break;
+        default:
+          rank = CardRank.values()[rankCh - '0'];
+      }
+      switch (suitCh) {
+        case 's':
+          suit = CardSuit.SPADE;
+          break;
+        case 'h':
+          suit = CardSuit.HEART;
+          break;
+        case 'c':
+          suit = CardSuit.CLUB;
+          break;
+        case 'd':
+          suit = CardSuit.DIAMOND;
+          break;
+        default:
+          throw new IllegalArgumentException("Unexpected char for suit: " + suitCh);
+      }
+      return Card.of(rank, suit);
+    }
+  }
+
+  /**
+   * Generate list of cards from a string. Each card is represented with two characters:
+   */
+  public static Hand handOf(String cards) {
     Iterable<String> cardStr = Splitter.fixedLength(2).split(cards);
     List<Card> res = new ArrayList<>(cards.length() / 2);
-    for (String c : cardStr) {
-      if (c.equals("JO")) {
-        res.add(Card.of(CardRank.JOKER, CardSuit.RED_JOKER));
-      } else if (c.equals("jo")) {
-        res.add(Card.of(CardRank.JOKER, CardSuit.BLACK_JOKER));
-      } else {
-        char rankCh = c.charAt(0);
-        char suitCh = c.charAt(1);
-        CardRank rank;
-        CardSuit suit;
-        switch (rankCh) {
-          case 'A':
-            rank = CardRank.ACE;
-            break;
-          case 'K':
-            rank = CardRank.KING;
-            break;
-          case 'Q':
-            rank = CardRank.QUEEN;
-            break;
-          case 'J':
-            rank = CardRank.JACK;
-            break;
-          case 'T':
-            rank = CardRank.TEN;
-            break;
-          default:
-            rank = CardRank.values()[rankCh - '0'];
-        }
-        switch (suitCh) {
-          case 's':
-            suit = CardSuit.SPADE;
-            break;
-          case 'h':
-            suit = CardSuit.HEART;
-            break;
-          case 'c':
-            suit = CardSuit.CLUB;
-            break;
-          case 'd':
-            suit = CardSuit.DIAMOND;
-            break;
-          default:
-            throw new IllegalArgumentException("Unexpected char for suit: " + suitCh);
-        }
-        res.add(Card.of(rank, suit));
-      }
-    }
-    return res;
+    cardStr.forEach(cStr -> res.add(cardOf(cStr)));
+    return new Hand(res);
+  }
+
+  public static Slice sliceOf(String card, int multiplex) {
+    return new Slice(cardOf(card), multiplex);
   }
 
   public static String prettyPrintCards(Card... card) {

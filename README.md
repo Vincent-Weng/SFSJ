@@ -22,7 +22,6 @@ always be preferred**.
 |主牌级数|DominantRank|
 |毙牌|Override|
 |底牌|HiddenCards|
-|一搭|Slice|如一张5,一对5,三个5,允许拖拉机模式下的556677等|
+|一搭|Slice|如一张5,一对5,三个5|
 |牌型|Pattern|可以为单个Slice,也可以为多个Slice的组合(Combo)|
-|拖拉机|Tractor|
 

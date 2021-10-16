@@ -41,7 +41,7 @@ public class Card implements Comparable<Card> {
   }
 
   /**
-   * Card sorting without considering additional factors:
+   * Natural card sorting without considering dominants:
    *
    * RED_JOKER (0), BLACK_JOKER (1), SPADE:ACE (2), SPADE:KING (3), ..., SPADE:TWO, HEART:ACE,
    * HEART:KING, ..., HEART:TWO, CLUB:ACE, CLUB:KING, ..., CLUB:TWO, DIAMOND:ACE, DIAMOND:KING, ...,
