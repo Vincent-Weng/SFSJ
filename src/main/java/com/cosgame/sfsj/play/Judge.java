@@ -14,6 +14,17 @@ import java.util.logging.Logger;
 
 public class Judge {
 
+  static class Winner {
+
+    final int id;
+    final Slice winningSlice;
+
+    public Winner(int id, Slice winningSlice) {
+      this.id = id;
+      this.winningSlice = winningSlice;
+    }
+  }
+
   public static final Logger LOG = Logger.getLogger(Judge.class.getName());
   CardRank dominantRank;
   CardSuit dominantSuit;
@@ -30,13 +41,13 @@ public class Judge {
    * in this round, which therefore determines the format of this round (a starter hand).
    * @return The index of player who won this round.
    */
-  public int whoWins(Hand[] hands) {
+  public Winner whoWins(Hand[] hands) {
     if (hands == null || hands.length != 4) {
       throw new IllegalArgumentException("Input hands must have a size of 4!");
     }
     Pattern starterPattern = hands[0].maxSplit(); // starterPattern. define the pattern of this round.
 
-    int winner = 0;
+    int winnerID = 0;
     Slice winnerSlice = starterPattern.getHighestSlice(dominantRank, dominantSuit);
     Comparator<Slice> sliceComparator = (s1, s2) -> CardUtils.cardComparator(dominantRank,
         dominantSuit).compare(s1.card, s2.card);
@@ -48,7 +59,7 @@ public class Judge {
         continue; // lose: a suit-mixed hand can never beat starterPattern
       }
       if (getHandSuitType(curHand) != HandSuitType.DOMINANTS
-          && hands[i].getCards().get(0).getSuit() != hands[0].getCards().get(0).getSuit()) {
+          && curHand.getCards().get(0).getSuit() != hands[0].getCards().get(0).getSuit()) {
         continue; // lose: current hand is not dominant, and not same suit as starter hand
       }
       if (curHand.splitAccordingTo(starterPattern) == Pattern.NOT_MATCH) {
@@ -58,11 +69,11 @@ public class Judge {
           .getHighestSlice(dominantRank, dominantSuit);
       if (sliceComparator.compare(curHighest, winnerSlice) < 0) {
         LOG.log(INFO, curHand + " with highest slice " + curHighest + " beats " + winnerSlice);
-        winner = i;
+        winnerID = i;
         winnerSlice = curHighest;
       }
     }
-    return winner;
+    return new Winner(winnerID, winnerSlice);
   }
 
   private HandSuitType getHandSuitType(Hand hand) {

@@ -87,17 +87,19 @@ public class Card implements Comparable<Card> {
   }
 
   public enum CardSuit {
-    SPADE("♠"),
-    HEART("♥"),
-    CLUB("♣"),
-    DIAMOND("♦"),
-    RED_JOKER("JO"),
-    BLACK_JOKER("jo");
+    SPADE("♠", "s"),
+    HEART("♥", "h"),
+    CLUB("♣", "c"),
+    DIAMOND("♦", "d"),
+    RED_JOKER("JO", "JO"),
+    BLACK_JOKER("jo", "jo");
 
     private final String symbol;
+    public final String serializeSymbol;
 
-    CardSuit(String symbol) {
+    CardSuit(String symbol, String serializeSymbol) {
       this.symbol = symbol;
+      this.serializeSymbol = serializeSymbol;
     }
 
     @Override
@@ -107,25 +109,27 @@ public class Card implements Comparable<Card> {
   }
 
   public enum CardRank {
-    JOKER(" "),
-    ACE(" A"),
-    TWO(" 2"),
-    THREE(" 3"),
-    FOUR(" 4"),
-    FIVE(" 5"),
-    SIX(" 6"),
-    SEVEN(" 7"),
-    EIGHT(" 8"),
-    NINE(" 9"),
-    TEN("10"),
-    JACK(" J"),
-    QUEEN(" Q"),
-    KING(" K");
+    JOKER(" ", ""),
+    ACE(" A", "A"),
+    TWO(" 2", "2"),
+    THREE(" 3", "3"),
+    FOUR(" 4", "4"),
+    FIVE(" 5", "5"),
+    SIX(" 6", "6"),
+    SEVEN(" 7", "7"),
+    EIGHT(" 8", "8"),
+    NINE(" 9", "9"),
+    TEN("10", "T"),
+    JACK(" J", "J"),
+    QUEEN(" Q", "Q"),
+    KING(" K", "K");
 
     private final String symbol;
+    public String serializeSymbol;
 
-    CardRank(String symbol) {
+    CardRank(String symbol, String serializeSymbol) {
       this.symbol = symbol;
+      this.serializeSymbol = serializeSymbol;
     }
 
     @Override

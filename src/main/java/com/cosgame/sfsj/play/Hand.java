@@ -24,7 +24,7 @@ public class Hand {
 
   public Hand(List<Card> cards) {
     this.cards = cards;
-    this.points = calculatePoints();
+    this.points = CardUtils.calculatePoints(cards);
   }
 
   public List<Card> getCards() {
@@ -127,21 +127,6 @@ public class Hand {
   @Override
   public String toString() {
     return "Hand{" + cards + '}';
-  }
-
-  private int calculatePoints() {
-    int pts = 0;
-    for (Card c : cards) {
-      switch (c.getRank()) {
-        case TEN:
-        case KING:
-          pts += 10;
-          break;
-        case FIVE:
-          pts += 5;
-      }
-    }
-    return pts;
   }
 
   // Hand suite type. All dominants are considered the same suit

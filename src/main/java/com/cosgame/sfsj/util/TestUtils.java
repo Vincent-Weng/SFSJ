@@ -81,10 +81,14 @@ public class TestUtils {
    * Generate list of cards from a string. Each card is represented with two characters:
    */
   public static Hand handOf(String cards) {
+    return new Hand(cardsOf(cards));
+  }
+
+  public static List<Card> cardsOf(String cards) {
     Iterable<String> cardStr = Splitter.fixedLength(2).split(cards);
     List<Card> res = new ArrayList<>(cards.length() / 2);
     cardStr.forEach(cStr -> res.add(cardOf(cStr)));
-    return new Hand(res);
+    return res;
   }
 
   public static Slice sliceOf(String card, int multiplex) {
